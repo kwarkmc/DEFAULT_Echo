@@ -85,6 +85,14 @@ void loop() {
   }
   else Serial.println(F("Card read previously."));
 
+  if (content.substring(1) == "50 43 C2 19")
+  {
+    Serial.println("Authorized access");
+    Serial.println();
+    delay(3000);
+  }
+
+
   rfid.PICC_HaltA();
 
   rfid.PCD_StopCrypto1();
