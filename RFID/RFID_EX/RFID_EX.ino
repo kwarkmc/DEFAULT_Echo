@@ -1,7 +1,7 @@
 #include <SPI.h>
 #include <MFRC522.h>
 
-#define SS_PIN 10 //Chip Select 핀
+#define SS_PIN 4 //Chip Select 핀
 #define RST_PIN 9 //Reset 핀
 
 //다른 핀들은 SPI 라이브러리 사용.
@@ -13,14 +13,16 @@ MFRC522::MIFARE_Key key;
 byte nuidPICC[4]; // 이전 ID와 비교하기 위한 변수
 
 void printHex(byte *buffer, byte bufferSize) {
-  for (byte i = 0; i<bufferSize; i++) {
+  for (byte i = 0; i < bufferSize; i++) {
     Serial.print(buffer[i] < 0x10 ? " 0" : " ");
     Serial.print(buffer[i], HEX);
+    content.concat(String(buffer[i] < 0x10 ? " 0" : " "));
+    content.concat(String(buffer[i], HEX));
   }
 }
 
 void printDec(byte *buffer, byte bufferSize) {
-  for (byte i = 0; i<bufferSize; i++) {
+  for (byte i = 0; i < bufferSize; i++) {
     Serial.print(buffer[i] < 0x10 ? " 0" : " ");
     Serial.print(buffer[i], DEC);
   }
@@ -67,7 +69,7 @@ void loop() {
       rfid.uid.uidByte[2] != nuidPICC[2] ||
       rfid.uid.uidByte[3] != nuidPICC[3] ) {
     Serial.println(F("New card has been detected."));
-      //바로 전에 인식한 카드와 다른 ID 를 가진다면
+    //바로 전에 인식한 카드와 다른 ID 를 가진다면
     for (byte i = 0; i < 4; i++) {
       nuidPICC[i] = rfid.uid.uidByte[i];
     } //ID를 저장
