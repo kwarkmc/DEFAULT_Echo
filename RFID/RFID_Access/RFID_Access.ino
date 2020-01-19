@@ -18,8 +18,9 @@ void printHex(byte *buffer, byte bufferSize) {
   for (byte i = 0; i < bufferSize; i++) {
     Serial.print(buffer[i] < 0x10 ? " 0" : " ");
     Serial.print(buffer[i], HEX);
-    content.concat(String(buffer[i] < 0x10 ? " 0" : " "));
+    /*content.concat(String(buffer[i] < 0x10 ? " 0" : " "));
     content.concat(String(buffer[i], HEX));
+    */
   }
 }
 
@@ -51,7 +52,7 @@ void loop() {
   Serial.println();
   Serial.print("Message : ");
   content.toUpperCase();
-  if (content.substring(1) == "BD 31 15 2B") {
+  if (content.substring(1) == "89 3B F1 B8") {
     Serial.println("Authorized access");
     Serial.println();
     delay(3000);
